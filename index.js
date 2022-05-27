@@ -6,7 +6,8 @@ import cors from "cors"
 
 import  './config/db.config.js';
 
-import teamR from "./router/teamrouter.js";
+import routes from "./router/index.router.js";
+import { picCompress } from "./controller/pic.controller.js";
 
 const app = express();
 app.use(express.json())
@@ -26,23 +27,21 @@ const allowedDomains =
 
 
     app.use(cors())
-app.use('/api/teams',teamR)
+app.use('/api',routes)
 
-const fileStorageEngine =multer.diskStorage({
-    destination:(req,file,cb)=>{
-        cb(null,'./public/uploads')
-    },
-    filename:(req,file,cb)=>{
-        cb(null, Date.now()+"--"+file.originalname)
-    }
-})
+// const fileStorageEngine =multer.diskStorage({
+//     destination:(req,file,cb)=>{
+//         cb(null,'./public/uploads')
+//     },
+//     filename:(req,file,cb)=>{
+//         cb(null, Date.now()+"--"+file.originalname)
+//     }
+// })
 
-const upload =multer({storage:fileStorageEngine})
+const storage=multer.memoryStorage()
+const upload =multer({storage})
 
-app.post("/single",upload.single('image'),(req,res,next)=>{
-    console.log(req.file)
-res.send(" single file upload successful")
-})
+app.post("/single",upload.single('image'),picCompress)
 
 app.post("/multiple",upload.array('images',2),(req,res)=>{
     console.log(req.files)
