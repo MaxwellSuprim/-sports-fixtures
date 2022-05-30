@@ -1,7 +1,7 @@
 import express from "express";
 
 import group from "../models/groups.js";
-import Teams from "../models/Teams.js";
+import Teams from "../models/teams.js";
 import Fixture from "../models/fixtures.js";
 
 export const createGroup = async (req, res, next) => {
@@ -157,5 +157,50 @@ export const getfixture =async(req,res,next)=>{
    }
 
     
+}
+
+export const adddate=async(req,res,next)=>{
+   
+       
+Date.prototype.addDays = function(days) {
+    var date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+}
+
+var date = new Date();
+
+console.log(date)
+let apk1=[]
+for(let i=0;i<30;i=i+5){
+const apk= (date.addDays(i));
+
+apk1.push(apk)
+
+}
+console.log(apk1)
+   
+    let add= await Fixture.find()
+    //console.log(add)
+    console.log(add[0]._id)
+    let count=0
+    let k =0;
+    for(let i =0;i<add.length;i++){
+        
+         
+    if(count==2){
+        count=0
+        k++
+    
+    }
+        
+    let date=await Fixture.findByIdAndUpdate(add[i]._id,{date_fixture:apk1[k]})
+
+    count++
+    console.log(date)
+        
+    }
+
+    res.status(200).json("successfully date updated")
 }
 

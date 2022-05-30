@@ -1,4 +1,4 @@
-import Teams from "../models/Teams.js"
+import Teams from "../models/teams.js"
 
 export const postTeams = async (req, res, next) => {
 

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createGroup, createfixture,getfixture, getGroup, updatefixture } from "../controller/group.controller.js";
+import { createGroup, createfixture,getfixture, getGroup, updatefixture,adddate } from "../controller/group.controller.js";
 
 
 
@@ -12,6 +12,8 @@ router.post('/createfixture',createfixture)
 
 router.get('/',getfixture)
 router.patch('/:id',updatefixture)
+router.put('/adddate',adddate)
+
 
 
 

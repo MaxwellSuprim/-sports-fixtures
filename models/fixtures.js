@@ -10,6 +10,9 @@ team2:{
     ref:'Teams'
 
   },
+  date_fixture:
+  {type:Date
+ },
     score:{
         type:String,
         
